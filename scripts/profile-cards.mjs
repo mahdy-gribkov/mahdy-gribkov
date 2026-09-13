@@ -185,11 +185,115 @@ function graphCard(p) {
 </svg>`;
 }
 
+// --- Cross-account activity -----------------------------------------------------
+// GitHub credits each commit to the ONE account whose verified email authored it, and
+// there is no native way to merge accounts' graphs. So this card counts the REAL
+// cross-account activity from actual commits (search/commits, default branch,
+// graph-independent), summed by AUTHOR EMAIL across the tokens for the accounts I
+// control. The employer account (Cyvore) is never tokened: only its PUBLIC contribution
+// total is read. Commits and public contributions are labeled distinctly, never merged
+// into one figure. The numbers are whatever is true each run, never hardcoded.
+const ACTIVITY_YEAR = Number(process.env.ACTIVITY_YEAR) || new Date().getUTCFullYear();
+const ACTIVITY_FROM = `${ACTIVITY_YEAR}-01-01`;
+const ACTIVITY_TO = `${ACTIVITY_YEAR}-12-31`;
+
+// My authoring emails, grouped by the account label shown on the card.
+const OWN_AUTHOR_EMAILS = [
+  { label: "SporeSec", email: "sporesec@gmail.com" },
+  { label: "Personal", email: "mahdy34552@gmail.com" },
+  { label: "Personal", email: "101642367+medy-gribkov@users.noreply.github.com" },
+  { label: "Deploy", email: "medygribkov@gmail.com" },
+];
+
+// Tokens for accounts I control, used only to COUNT my own commits (private included).
+// Absent ones are skipped. Never a Cyvore token.
+const SEARCH_TOKENS = [TOKEN, process.env.PAT_MEDY, process.env.PAT_SPORESEC, process.env.PAT_DEPL]
+  .filter(Boolean)
+  .filter((t, i, arr) => arr.indexOf(t) === i);
+
+// Employer account: PUBLIC contribution total only, never tokened, nothing written to it.
+const CYVORE_LOGIN = process.env.CYVORE_LOGIN || "medyg-cyvore";
+
+async function searchCommitCount(email, token) {
+  const q = `author-email:${email} author-date:${ACTIVITY_FROM}..${ACTIVITY_TO}`;
+  const res = await fetch(`https://api.github.com/search/commits?q=${encodeURIComponent(q)}&per_page=1`, {
+    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" },
+  });
+  if (!res.ok) throw new Error(`GitHub search/commits ${res.status} for ${email}: ${await res.text()}`);
+  return (await res.json()).total_count ?? 0;
+}
+
+async function fetchActivity() {
+  // Count each email under every available token and take the max: one author email is
+  // one commit, so this never double-counts, and the broadest-coverage token wins. It is
+  // conservative (an email split across tokens may slightly under-count, never over).
+  const perLabel = new Map();
+  for (const { label, email } of OWN_AUTHOR_EMAILS) {
+    let best = 0;
+    for (const token of SEARCH_TOKENS) {
+      try {
+        best = Math.max(best, await searchCommitCount(email, token));
+      } catch (err) {
+        console.error(`  warn: count failed for ${email}: ${err.message}`);
+      }
+    }
+    perLabel.set(label, (perLabel.get(label) || 0) + best);
+  }
+  const ownTotal = [...perLabel.values()].reduce((sum, n) => sum + n, 0);
+
+  // Cyvore PUBLIC contribution total. Any token reads a public profile; this creates no
+  // Cyvore credential and touches nothing on Cyvore.
+  let cyvore = 0;
+  try {
+    const data = await gql(
+      `query($l:String!){ user(login:$l){ contributionsCollection(from:"${ACTIVITY_FROM}T00:00:00Z", to:"${ACTIVITY_TO}T23:59:59Z"){ contributionCalendar{ totalContributions } } } }`,
+      { l: CYVORE_LOGIN }
+    );
+    cyvore = data.user?.contributionsCollection?.contributionCalendar?.totalContributions ?? 0;
+  } catch (err) {
+    console.error(`  warn: Cyvore public read failed: ${err.message}`);
+  }
+
+  return { year: ACTIVITY_YEAR, perLabel, ownTotal, cyvore };
+}
+
+function activityCard(a) {
+  const rows = [...a.perLabel.entries()]
+    .filter(([, n]) => n > 0)
+    .sort((x, y) => y[1] - x[1])
+    .map(([label, n]) => [`${label} commits`, n]);
+  rows.push(["Cyvore (public contributions)", a.cyvore]);
+
+  const W = 480;
+  const rowStart = 118;
+  const H = rowStart + rows.length * 34 + 28;
+  const num = (v) => v.toLocaleString("en-US");
+  const items = rows
+    .map(([label, value], i) => {
+      const y = rowStart + i * 34;
+      return `
+    <text x="30" y="${y}" fill="${C.text}" font-size="15">${esc(label)}</text>
+    <text x="${W - 30}" y="${y}" fill="${C.accent}" font-size="15" font-weight="700" text-anchor="end">${esc(num(value))}</text>`;
+    })
+    .join("");
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Activity across all my GitHub accounts">
+  <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="14" fill="${C.bg}" stroke="${C.border}"/>
+  <text x="30" y="40" fill="${C.accent}" font-size="19" font-weight="700" font-family="${FONT}">Activity Across All My Accounts</text>
+  <text x="30" y="80" fill="${C.text}" font-size="30" font-weight="700" font-family="${FONT}">${esc(num(a.ownTotal))}<tspan font-size="15" font-weight="400" fill="${C.muted}"> commits in ${a.year}</tspan></text>
+  <g font-family="${FONT}">${items}
+  </g>
+  <text x="30" y="${H - 12}" fill="${C.muted}" font-size="11" font-family="${FONT}">Real commits summed by author email across my SporeSec, personal and deploy accounts. Cyvore shown as its public contribution count.</text>
+</svg>`;
+}
+
 const p = await fetchProfile();
+const a = await fetchActivity();
 mkdirSync("dist", { recursive: true });
 writeFileSync("dist/github-stats.svg", statsCard(p));
 writeFileSync("dist/github-langs.svg", langsCard(p));
 writeFileSync("dist/github-graph.svg", graphCard(p));
-console.log("Wrote dist/github-stats.svg, dist/github-langs.svg, dist/github-graph.svg");
+writeFileSync("dist/github-activity.svg", activityCard(a));
+console.log("Wrote dist/github-stats.svg, dist/github-langs.svg, dist/github-graph.svg, dist/github-activity.svg");
 console.log(`stars=${p.stars} commits=${p.commits} prs=${p.prs} repos=${p.repos} followers=${p.followers}`);
 console.log("langs:", p.languages.map((l) => `${l.name} ${l.pct.toFixed(1)}%`).join(", "));
+console.log(`activity ${a.year}: own commits=${a.ownTotal} (${[...a.perLabel].map(([k, v]) => `${k}=${v}`).join(", ")}), cyvore public=${a.cyvore}`);

@@ -1,0 +1,64 @@
+name: profile-cards
+
+# Regenerates the committed profile SVGs (stats, languages, contribution graph, and the
+# cross-account activity card) and publishes them to the `output` branch that the README
+# reads. Runs on a schedule so the cards stay current with no live dependency at read time.
+#
+# The activity card counts real commits across the accounts I control (search/commits, via
+# the PAT secrets below) plus Cyvore's PUBLIC contribution total (no Cyvore token). If a
+# secret is missing the card still renders with whatever it could count, and the run logs a
+# warning rather than failing silently.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/profile-cards.mjs"
+      - ".github/workflows/profile-cards.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-cards
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate cards
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAT_MEDY: ${{ secrets.PAT_MEDY }}
+          PAT_SPORESEC: ${{ secrets.PAT_SPORESEC }}
+          PAT_DEPL: ${{ secrets.PAT_DEPL }}
+        run: node scripts/profile-cards.mjs
+
+      - name: Publish cards to the output branch
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp -d)"
+          cp dist/github-*.svg "$tmp"/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin output:output
+          git worktree add out output
+          cp "$tmp"/github-*.svg out/
+          cd out
+          git add github-*.svg
+          if git diff --cached --quiet; then
+            echo "No card changes to publish."
+          else
+            git commit -m "chore(profile): refresh cards [skip ci]"
+            git push origin output
+          fi
