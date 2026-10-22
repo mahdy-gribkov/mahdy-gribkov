@@ -130,7 +130,7 @@ function statsCard(p) {
     .join("");
   return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GitHub statistics">
   <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="14" fill="${C.bg}" stroke="${C.border}"/>
-  <text x="30" y="42" fill="${C.accent}" font-size="19" font-weight="700" font-family="${FONT}">Medy Gribkov's GitHub Stats</text>
+  <text x="30" y="42" fill="${C.accent}" font-size="19" font-weight="700" font-family="${FONT}">Mahdy Lorens Gribkov's GitHub Stats</text>
   <g font-family="${FONT}">${items}
   </g>
 </svg>`;
@@ -202,12 +202,13 @@ const OWN_AUTHOR_EMAILS = [
   { label: "SporeSec", email: "sporesec@gmail.com" },
   { label: "Personal", email: "mahdy34552@gmail.com" },
   { label: "Personal", email: "101642367+medy-gribkov@users.noreply.github.com" },
-  { label: "Deploy", email: "medygribkov@gmail.com" },
+  // The old address authored the deploy account's commits; that account was deleted 2026-10-21, its commits still count.
+  { label: "Old address", email: "medygribkov@gmail.com" },
 ];
 
 // Tokens for accounts I control, used only to COUNT my own commits (private included).
-// Absent ones are skipped. Never a Cyvore token.
-const SEARCH_TOKENS = [TOKEN, process.env.PAT_MEDY, process.env.PAT_SPORESEC, process.env.PAT_DEPL]
+// Absent ones are skipped. Never a Cyvore token. No deploy-account token: that account was deleted 2026-10-21.
+const SEARCH_TOKENS = [TOKEN, process.env.PAT_MEDY, process.env.PAT_SPORESEC]
   .filter(Boolean)
   .filter((t, i, arr) => arr.indexOf(t) === i);
 
@@ -282,7 +283,7 @@ function activityCard(a) {
   <text x="30" y="80" fill="${C.text}" font-size="30" font-weight="700" font-family="${FONT}">${esc(num(a.ownTotal))}<tspan font-size="15" font-weight="400" fill="${C.muted}"> commits in ${a.year}</tspan></text>
   <g font-family="${FONT}">${items}
   </g>
-  <text x="30" y="${H - 12}" fill="${C.muted}" font-size="11" font-family="${FONT}">Real commits summed by author email across my SporeSec, personal and deploy accounts. Cyvore shown as its public contribution count.</text>
+  <text x="30" y="${H - 12}" fill="${C.muted}" font-size="11" font-family="${FONT}">Real commits summed by author email across my SporeSec and personal accounts and my old address. Cyvore shown as its public contribution count.</text>
 </svg>`;
 }
 
