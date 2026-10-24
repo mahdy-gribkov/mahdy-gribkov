@@ -12,7 +12,8 @@
 
 import { writeFileSync, mkdirSync } from "node:fs";
 
-const LOGIN = process.env.PROFILE_LOGIN || "medy-gribkov";
+// Renamed from medy-gribkov on 2026-10-24; that name is now an empty guard organization.
+const LOGIN = process.env.PROFILE_LOGIN || "mahdy-gribkov";
 const TOKEN = process.env.GITHUB_TOKEN;
 if (!TOKEN) {
   console.error("Missing GITHUB_TOKEN. In Actions this is provided automatically; set it locally to preview.");
@@ -202,6 +203,8 @@ const OWN_AUTHOR_EMAILS = [
   { label: "SporeSec", email: "sporesec@gmail.com" },
   { label: "Personal", email: "mahdy34552@gmail.com" },
   { label: "Personal", email: "101642367+medy-gribkov@users.noreply.github.com" },
+  { label: "Personal", email: "101642367+mahdy-gribkov@users.noreply.github.com" },
+  { label: "Personal", email: "mahdygribk@gmail.com" },
   // The old address authored the deploy account's commits; that account was deleted 2026-10-21, its commits still count.
   { label: "Old address", email: "medygribkov@gmail.com" },
 ];
