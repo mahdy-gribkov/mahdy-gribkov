@@ -216,7 +216,8 @@ const SEARCH_TOKENS = [TOKEN, process.env.PAT_MEDY, process.env.PAT_SPORESEC]
   .filter((t, i, arr) => arr.indexOf(t) === i);
 
 // Employer account: PUBLIC contribution total only, never tokened, nothing written to it.
-const CYVORE_LOGIN = process.env.CYVORE_LOGIN || "medyg-cyvore";
+// The Cyvore account was renamed from medyg-cyvore (owner, 2026-10-24); read publicly, never tokened.
+const CYVORE_LOGIN = process.env.CYVORE_LOGIN || "mahdy-cyvore";
 
 async function searchCommitCount(email, token) {
   const q = `author-email:${email} author-date:${ACTIVITY_FROM}..${ACTIVITY_TO}`;
