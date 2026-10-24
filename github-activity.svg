@@ -1,14 +1,14 @@
 <svg width="480" height="248" viewBox="0 0 480 248" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Activity across all my GitHub accounts">
   <rect x="0.5" y="0.5" width="479" height="247" rx="14" fill="#0c0b0e" stroke="rgba(212,148,58,0.28)"/>
   <text x="30" y="40" fill="#d4943a" font-size="19" font-weight="700" font-family="'Segoe UI', Ubuntu, system-ui, sans-serif">Activity Across All My Accounts</text>
-  <text x="30" y="80" fill="#e0c9a6" font-size="30" font-weight="700" font-family="'Segoe UI', Ubuntu, system-ui, sans-serif">6,301<tspan font-size="15" font-weight="400" fill="#8a7f6f"> commits in 2026</tspan></text>
+  <text x="30" y="80" fill="#e0c9a6" font-size="30" font-weight="700" font-family="'Segoe UI', Ubuntu, system-ui, sans-serif">6,302<tspan font-size="15" font-weight="400" fill="#8a7f6f"> commits in 2026</tspan></text>
   <g font-family="'Segoe UI', Ubuntu, system-ui, sans-serif">
     <text x="30" y="118" fill="#e0c9a6" font-size="15">SporeSec commits</text>
     <text x="450" y="118" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">5,325</text>
     <text x="30" y="152" fill="#e0c9a6" font-size="15">Personal commits</text>
-    <text x="450" y="152" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">976</text>
+    <text x="450" y="152" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">977</text>
     <text x="30" y="186" fill="#e0c9a6" font-size="15">Cyvore (public contributions)</text>
-    <text x="450" y="186" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">0</text>
+    <text x="450" y="186" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">658</text>
   </g>
   <text x="30" y="236" fill="#8a7f6f" font-size="11" font-family="'Segoe UI', Ubuntu, system-ui, sans-serif">Real commits summed by author email across my SporeSec and personal accounts and my old address. Cyvore shown as its public contribution count.</text>
 </svg>
