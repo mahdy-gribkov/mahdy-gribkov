@@ -283,7 +283,7 @@ Eco Logic (hackathon), DarkWeb Scanner (Rust/Tor), Phishing Simulator (Go/SMTP),
 </div>
 
 <div align="center">
-  <img src="https://komarev.com/ghpvc/?username=mahdy-gribkov&style=for-the-badge&color=d4943a&label=PROFILE+VIEWS" alt="Profile Views"/>
+  <img src="https://komarev.com/ghpvc/?username=medy-gribkov&style=for-the-badge&color=d4943a&label=PROFILE+VIEWS" alt="Profile Views"/>
 </div>
 
 <p align="center">
