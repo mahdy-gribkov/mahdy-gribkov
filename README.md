@@ -5,6 +5,9 @@
 
 </div>
 
+<p align="center"><b>Mahdy Lorens Gribkov</b> (מהדי לורנס גריבקוב) | <a href="https://mahdygribkov.com">mahdygribkov.com</a> | <a href="https://sporesec.com/en/mahdy-lorens-gribkov">SporeSec</a></p>
+
+
 <div align="center">
   <a href="https://sporesec.com">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=10000&color=D4943A&center=true&vCenter=true&multiline=false&repeat=true&width=700&height=30&lines=Self-taught.+No+shortcuts.+Building+what+matters." alt="Typing SVG" />
@@ -255,7 +258,7 @@ Eco Logic (hackathon), DarkWeb Scanner (Rust/Tor), Phishing Simulator (Go/SMTP),
 </div>
 
 <div align="center">
-  <img src="https://komarev.com/ghpvc/?username=medy-gribkov&style=for-the-badge&color=d4943a&label=PROFILE+VIEWS" alt="Profile Views"/>
+  <img src="https://komarev.com/ghpvc/?username=mahdy-gribkov&style=for-the-badge&color=d4943a&label=PROFILE+VIEWS" alt="Profile Views"/>
 </div>
 
 <p align="center">
