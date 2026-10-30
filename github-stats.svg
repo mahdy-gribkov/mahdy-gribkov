@@ -5,7 +5,7 @@
     <text x="30" y="78" fill="#e0c9a6" font-size="15">Total stars earned</text>
     <text x="450" y="78" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">10</text>
     <text x="30" y="112" fill="#e0c9a6" font-size="15">Commits (past year)</text>
-    <text x="450" y="112" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">576</text>
+    <text x="450" y="112" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">586</text>
     <text x="30" y="146" fill="#e0c9a6" font-size="15">Total PRs</text>
     <text x="450" y="146" fill="#d4943a" font-size="15" font-weight="700" text-anchor="end">5</text>
     <text x="30" y="180" fill="#e0c9a6" font-size="15">Public repositories</text>
