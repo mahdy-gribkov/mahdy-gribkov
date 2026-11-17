@@ -4,7 +4,7 @@
   <g font-family="'Segoe UI', Ubuntu, system-ui, sans-serif">
     <text x="26" y="74" fill="#e0c9a6" font-size="13">TypeScript</text>
     <rect x="150" y="61" width="150" height="8" rx="4" fill="rgba(224,201,166,0.12)"/>
-    <rect x="150" y="61" width="79.9" height="8" rx="4" fill="#3178c6"/>
+    <rect x="150" y="61" width="80.0" height="8" rx="4" fill="#3178c6"/>
     <text x="336" y="74" fill="#8a7f6f" font-size="12" text-anchor="end">53.3%</text>
     <text x="26" y="104" fill="#e0c9a6" font-size="13">JavaScript</text>
     <rect x="150" y="91" width="150" height="8" rx="4" fill="rgba(224,201,166,0.12)"/>
@@ -13,10 +13,10 @@
     <text x="26" y="134" fill="#e0c9a6" font-size="13">C++</text>
     <rect x="150" y="121" width="150" height="8" rx="4" fill="rgba(224,201,166,0.12)"/>
     <rect x="150" y="121" width="17.0" height="8" rx="4" fill="#f34b7d"/>
-    <text x="336" y="134" fill="#8a7f6f" font-size="12" text-anchor="end">11.4%</text>
+    <text x="336" y="134" fill="#8a7f6f" font-size="12" text-anchor="end">11.3%</text>
     <text x="26" y="164" fill="#e0c9a6" font-size="13">C#</text>
     <rect x="150" y="151" width="150" height="8" rx="4" fill="rgba(224,201,166,0.12)"/>
-    <rect x="150" y="151" width="8.0" height="8" rx="4" fill="#7355dd"/>
+    <rect x="150" y="151" width="7.9" height="8" rx="4" fill="#7355dd"/>
     <text x="336" y="164" fill="#8a7f6f" font-size="12" text-anchor="end">5.3%</text>
     <text x="26" y="194" fill="#e0c9a6" font-size="13">Python</text>
     <rect x="150" y="181" width="150" height="8" rx="4" fill="rgba(224,201,166,0.12)"/>
